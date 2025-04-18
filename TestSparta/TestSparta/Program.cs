@@ -1,11 +1,45 @@
-﻿using GamePlayer;
-
-namespace ConsoleAppl
+﻿using GamePlay;
+using GameLogic;
+public static class GameStart
 {
-
-    internal class Program
+    private static void Main()
     {
-        private static Item[] gameItem =
+        var player = new Warrior();
+        var game = new Game();
+        var input = 0;
+
+        while (true)
+        {
+            input = game.MainInput();
+
+            switch (input)
+            {
+                case 1:
+                    game.InfoInput(player);
+                    break;
+
+                case 2:
+                    game.Inventory(player);
+                    break;
+
+                case 3:
+                    game.Shop(player);
+                    break;
+
+                default:
+                    Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(1000);
+                    break;
+            }
+        }
+    }
+}
+
+namespace GameLogic
+{
+    public class Game
+    {
+        private Item[] gameItem =
         {
             //방어구
             new Item("수련자 갑옷", "수련에 도움을 주는 갑옷입니다.", 1000, "방어력", 5),
@@ -18,7 +52,7 @@ namespace ConsoleAppl
             new Item("스파르타의 창", "쉽게 볼 수 있는 낡은 검 입니다.", 3500, "공격력", 7),
         };
 
-        private static bool CheckInput(out int _value)
+        public bool CheckInput(out int _value)
         {
             string input = Console.ReadLine();
 
@@ -29,7 +63,7 @@ namespace ConsoleAppl
             return false;
         }
 
-        private static int MainInput()
+        public int MainInput()
         {
             int input = 0;
 
@@ -66,7 +100,7 @@ namespace ConsoleAppl
             return input;
         }
 
-        private static void InfoInput(Job _player)
+        public void InfoInput(Job _player)
         {
             int input = 0;
 
@@ -104,7 +138,7 @@ namespace ConsoleAppl
             }
         }
 
-        private static void Inventory(Job _player)
+        public void Inventory(Job _player)
         {
             int input = 0;
             int playerItem = _player.item.Count;
@@ -154,7 +188,7 @@ namespace ConsoleAppl
             }
         }
 
-        private static void SelectItem(Job _player, int _itemIndex)
+        public void SelectItem(Job _player, int _itemIndex)
         {
             int input = 0;
 
@@ -196,7 +230,7 @@ namespace ConsoleAppl
             }
         }
 
-        private static void EquippedItem(Job _player, int _itemIndex)
+        public void EquippedItem(Job _player, int _itemIndex)
         {
             int input = 0;
 
@@ -248,7 +282,7 @@ namespace ConsoleAppl
             }
         }
 
-        private static void Shop(Job _player)
+        public void Shop(Job _player)
         {
             int input = 0;
 
@@ -297,7 +331,7 @@ namespace ConsoleAppl
             }
         }
 
-        private static void BuyItem(Job _player)
+        public void BuyItem(Job _player)
         {
             int input = 0;
 
@@ -367,41 +401,10 @@ namespace ConsoleAppl
                 }
             }
         }
-
-        private static void Main(string[] args)
-        {
-            int input = 0;
-            var player = new Warrior();
-
-            while (true)
-            {
-                input = MainInput();
-
-                switch (input)
-                {
-                    case 1:
-                        InfoInput(player);
-                        break;
-
-                    case 2:
-                        Inventory(player);
-                        break;
-
-                    case 3:
-                        Shop(player);
-                        break;
-
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(1000);
-                        break;
-                }
-            }
-        }
     }
 }
 
-namespace GamePlayer
+namespace GamePlay
 {
     public class Item
     {
